@@ -7,31 +7,42 @@
 </head>
 <body>
   <h1>Electron Puppeteer Crawler</h1>
-  <input id="url-input" type="text" placeholder="Enter URL" value="https://www.wisetoto.com/index.htm#getele=gameinfo_pt1" />
-  <button id="crawl-btn">와이즈토토</button>
-  <p id="result"></p>
+  <input id="url-wise" type="text" placeholder="Enter URL" value="https://www.wisetoto.com/index.htm#getele=gameinfo_pt1" />
+  <button id="crawl-wise-btn">와이즈분석</button>
+  <p id="result-wise"></p>
+  <input id="url-betman" type="text" placeholder="Enter URL" value="https://www.betman.co.kr/main/mainPage/gamebuy/gameSlip.do?frameType=typeA&gmId=G101&gmTs=240143" />
+  <button id="crawl-betman-btn">베트맨분석</button>
+  <p id="result-betman"></p>
+  
 
   <script>
-    const urlInput = document.getElementById('url-input');
-    const crawlBtn = document.getElementById('crawl-btn');
-    const result = document.getElementById('result');
+    const crawlWiseBtn = document.getElementById('crawl-wise-btn');
+    const crawlBetmanBtn = document.getElementById('crawl-betman-btn');
 
-    crawlBtn.addEventListener('click', async () => {
-      const url = urlInput.value;
+    async function callApiCrawlUrl(url, resultP) {
       if (!url) {
-        result.textContent = 'Please enter a valid URL.';
+        resultP.textContent = 'Please enter a valid URL.';
         return;
       }
 
-      result.textContent = 'Crawling...';
+      resultP.textContent = 'Crawling...';
 
       const response = await window.electronAPI.crawlUrl(url);
+    }
+    
 
-      if (response.success) {
-        result.textContent = `${response.data}`;
-      } else {
-        result.textContent = `Error: ${response.error}`;
-      }
+    crawlWiseBtn.addEventListener('click', async () => {
+      const url = document.getElementById('url-wise').value;
+      const result = document.getElementById('result-wise');
+      
+      callApiCrawlUrl(url, result); 
+    });
+
+    crawlBetmanBtn.addEventListener('click', async () => {
+      const url = document.getElementById('url-betman').value;
+      const result = document.getElementById('result-betman');
+      
+      callApiCrawlUrl(url, result); 
     });
   </script>
 </body>
