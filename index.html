@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electron Puppeteer Crawler</title>
+</head>
+<body>
+  <h1>Electron Puppeteer Crawler</h1>
+  <input id="url-input" type="text" placeholder="Enter URL" value="https://www.wisetoto.com/index.htm#getele=gameinfo_pt1" />
+  <button id="crawl-btn">와이즈토토</button>
+  <p id="result"></p>
+
+  <script>
+    const urlInput = document.getElementById('url-input');
+    const crawlBtn = document.getElementById('crawl-btn');
+    const result = document.getElementById('result');
+
+    crawlBtn.addEventListener('click', async () => {
+      const url = urlInput.value;
+      if (!url) {
+        result.textContent = 'Please enter a valid URL.';
+        return;
+      }
+
+      result.textContent = 'Crawling...';
+
+      const response = await window.electronAPI.crawlUrl(url);
+
+      if (response.success) {
+        result.textContent = `${response.data}`;
+      } else {
+        result.textContent = `Error: ${response.error}`;
+      }
+    });
+  </script>
+</body>
+</html>
